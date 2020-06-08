@@ -1,2 +1,6 @@
 Dataset/
 Models/
+Notebooks/Models
+twittersentiment
+.env
+.vscode
