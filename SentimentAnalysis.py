@@ -207,7 +207,7 @@ def main():
                     st.subheader(user_input)
                     val = tw1_pred["Sentiment"].value_counts().values
                     fig = go.Figure()
-                    fig.add_trace(go.Pie(labels=['Negative', 'Positive'],
+                    fig.add_trace(go.Pie(labels=['Positive', 'Negative'],
                                         values=val, name=user_input))
                     st.plotly_chart(fig)
 
@@ -215,7 +215,7 @@ def main():
                     st.subheader(user_input2)
                     val2 = tw2_pred["Sentiment"].value_counts().values
                     fig = go.Figure()
-                    fig.add_trace(go.Pie(labels=['Negative', 'Positive'],
+                    fig.add_trace(go.Pie(labels=['Positive', 'Negative'],
                                         values=val2, name=user_input2))
                     st.plotly_chart(fig)
 
@@ -251,7 +251,7 @@ def main():
                     st.subheader("Pie Chart")
                     val = tw1_pred["Sentiment"].value_counts().values
                     fig = go.Figure()
-                    fig.add_trace(go.Pie(labels=['Negative', 'Positive'],
+                    fig.add_trace(go.Pie(labels=['Positive', 'Negative'],
                                         values=val, name='First Tweet'))
                     st.plotly_chart(fig)
 
