@@ -132,10 +132,11 @@ def predict(vectorizer, model, tweets):
 
 def main():
     # page title
-    st.title('Twitter Sentiment Analsysis')
+
+
+    st.title('Twitter Sentiment Analysis')
     activities = ['Analyze Tweets', 'About']
     choice = st.sidebar.selectbox('Select Activity', activities)
-
 
     #Loading Models
     if choice == "Analyze Tweets":
@@ -149,135 +150,138 @@ def main():
             user_input2 = st.text_input(
                 "Another Keyword", "Type Here.")
 
+        count=st.sidebar.slider("Number of Tweets", min_value=10, max_value=1000, value=100,step=10)
         bar=st.progress(0)
+            
+        
         if st.button("Submit"):
-
-            start=time.time()
-    
-
-            text_query = user_input
-            queryTweet(text_query)
-            bar.progress(10)
-            
-
-            vect, model = load_models()
-            bar.progress(30)
-            
-            tw1 = getTweets(user_input, 100)
-            tw1_pred = predict(vect, model, tw1["Tweets"].tolist())
-            tw1_pred["Date"] = tw1["Date"]
-
-            st.subheader(user_input)
-            st.dataframe(tw1_pred)
-
-
-            bar.progress(60)
-            
-
-            if(flag):
-                tw2 = getTweets(user_input2, 100)
-                tw2_pred = predict(vect, model, tw2["Tweets"].tolist())
-                tw2_pred["Date"] = tw2["Date"]
-
-
-                st.subheader(user_input2)
-                st.dataframe(tw2_pred)
-
-            # tdf["Date"]=df["Date"]
-
-
-            if(flag):
-                # scatter plot
-                st.subheader("Scatter Plot")
-                fig = make_subplots(rows=1, cols=2)   
-                fig.add_trace(
-                    go.Scatter(
-                    x=tw1_pred["Date"], y=tw1_pred["Sentiment"], name=user_input),row=1,col=1)
-                fig.add_trace(
-                    go.Scatter(
-                    x=tw2_pred["Date"], y=tw2_pred["Sentiment"], name=user_input2),row=1,col=2)
-                st.plotly_chart(fig)
-
-
-                # pie chart
-                st.subheader(user_input)
-                val = tw1_pred["Sentiment"].value_counts().values
-                fig = go.Figure()
-                fig.add_trace(go.Pie(labels=['Negative', 'Positive'],
-                                    values=val, name=user_input))
-                st.plotly_chart(fig)
-
-            
-                st.subheader(user_input2)
-                val2 = tw2_pred["Sentiment"].value_counts().values
-                fig = go.Figure()
-                fig.add_trace(go.Pie(labels=['Negative', 'Positive'],
-                                    values=val2, name=user_input2))
-                st.plotly_chart(fig)
-
-
-
-                # bar chart
-                st.subheader("Bar Chart")
-                fig = go.Figure()
-                fig.add_trace(
-                    go.Bar(x=['Negative', 'Positive'], y=val, name=user_input))
-                fig.add_trace(
-                    go.Bar(x=['Negative', 'Positive'], y=val2, name=user_input2))
-
-                fig.update_layout(title="{} v {}".format(user_input, user_input2), title_x=0.5,
-                                xaxis_title='Sentiment',
-                                yaxis_title='Number of Tweets')
-                st.plotly_chart(fig)
-
-
-            
-
-            else:
-                # plot
-                st.subheader("Scatter Plot")
-                fig = go.Figure()
-                fig.add_trace(go.Scatter(
-                    x=tw1_pred["Date"], y=tw1_pred["Sentiment"], name=user_input))
-                
-                st.plotly_chart(fig)
-
-
-                # pie chart
-                st.subheader("Pie Chart")
-                val = tw1_pred["Sentiment"].value_counts().values
-                fig = go.Figure()
-                fig.add_trace(go.Pie(labels=['Negative', 'Positive'],
-                                    values=val, name='First Tweet'))
-                st.plotly_chart(fig)
-
-                # bar chart
-                st.subheader("Bar Chart")
-                fig = go.Figure()
-                fig.add_trace(
-                    go.Bar(x=['Negative', 'Positive'], y=val, name=user_input))
-                # fig.add_trace(
-                #     go.Bar(x=['Negative', 'Positive'], y=val2, name=user_input2))
-
-                fig.update_layout(title=user_input, title_x=0.5,
-                                xaxis_title='Sentiment',
-                                yaxis_title='Number of Tweets')
-                st.plotly_chart(fig)
-
-
-
-            bar.progress(100)
+            with st.spinner('Wait for it...'):
+                start=time.time()
         
 
-            end = time.time()
-            print("Total Time: ",end - start)
-    
+                text_query = user_input
+                queryTweet(text_query)
+                bar.progress(10)
+                
+
+                vect, model = load_models()
+                bar.progress(30)
+                
+                tw1 = getTweets(user_input, count)
+                tw1_pred = predict(vect, model, tw1["Tweets"].tolist())
+                tw1_pred["Date"] = tw1["Date"]
+
+                st.subheader(user_input)
+                st.dataframe(tw1_pred)
+
+
+                bar.progress(60)
+                
+
+                if(flag):
+                    tw2 = getTweets(user_input2, count)
+                    tw2_pred = predict(vect, model, tw2["Tweets"].tolist())
+                    tw2_pred["Date"] = tw2["Date"]
+
+
+                    st.subheader(user_input2)
+                    st.dataframe(tw2_pred)
+
+                # tdf["Date"]=df["Date"]
+
+
+                if(flag):
+                    # scatter plot
+                    st.subheader("Scatter Plot")
+                    fig = make_subplots(rows=1, cols=2)   
+                    fig.add_trace(
+                        go.Scatter(
+                        x=tw1_pred["Date"], y=tw1_pred["Sentiment"], name=user_input),row=1,col=1)
+                    fig.add_trace(
+                        go.Scatter(
+                        x=tw2_pred["Date"], y=tw2_pred["Sentiment"], name=user_input2),row=1,col=2)
+                    st.plotly_chart(fig)
+
+
+                    # pie chart
+                    st.subheader(user_input)
+                    val = tw1_pred["Sentiment"].value_counts().values
+                    fig = go.Figure()
+                    fig.add_trace(go.Pie(labels=['Negative', 'Positive'],
+                                        values=val, name=user_input))
+                    st.plotly_chart(fig)
+
+                
+                    st.subheader(user_input2)
+                    val2 = tw2_pred["Sentiment"].value_counts().values
+                    fig = go.Figure()
+                    fig.add_trace(go.Pie(labels=['Negative', 'Positive'],
+                                        values=val2, name=user_input2))
+                    st.plotly_chart(fig)
+
+
+
+                    # bar chart
+                    st.subheader("Bar Chart")
+                    fig = go.Figure()
+                    fig.add_trace(
+                        go.Bar(x=['Negative', 'Positive'], y=val, name=user_input))
+                    fig.add_trace(
+                        go.Bar(x=['Negative', 'Positive'], y=val2, name=user_input2))
+
+                    fig.update_layout(title="{} v {}".format(user_input, user_input2), title_x=0.5,
+                                    xaxis_title='Sentiment',
+                                    yaxis_title='Number of Tweets')
+                    st.plotly_chart(fig)
+
+
+                
+
+                else:
+                    # plot
+                    st.subheader("Scatter Plot")
+                    fig = go.Figure()
+                    fig.add_trace(go.Scatter(
+                        x=tw1_pred["Date"], y=tw1_pred["Sentiment"], name=user_input))
+                    
+                    st.plotly_chart(fig)
+
+
+                    # pie chart
+                    st.subheader("Pie Chart")
+                    val = tw1_pred["Sentiment"].value_counts().values
+                    fig = go.Figure()
+                    fig.add_trace(go.Pie(labels=['Negative', 'Positive'],
+                                        values=val, name='First Tweet'))
+                    st.plotly_chart(fig)
+
+                    # bar chart
+                    st.subheader("Bar Chart")
+                    fig = go.Figure()
+                    fig.add_trace(
+                        go.Bar(x=['Negative', 'Positive'], y=val, name=user_input))
+                    # fig.add_trace(
+                    #     go.Bar(x=['Negative', 'Positive'], y=val2, name=user_input2))
+
+                    fig.update_layout(title=user_input, title_x=0.5,
+                                    xaxis_title='Sentiment',
+                                    yaxis_title='Number of Tweets')
+                    st.plotly_chart(fig)
+
+
+
+                bar.progress(100)
+            
+                st.balloons()
+                end = time.time()
+                print("Total Time: ",end - start)
+        
 
     elif choice == "About":
         st.subheader("Orientation Project for Team Rigel")
+        st.info("Twitter Sentiment Classifier trained on Sentiment 140 Dataset. Tweets preprocessed and TF-IDF computed with ngram=(1,3) and 10k words . Best performing model was Support Vector Classifier with 80% Accuracy. GetOldTweets is used for twitter scraping.")
         st.markdown(
             "Built by [Paul](https://github.com/talentmavingire/)" " ," " [Asad](https://github.com/AsadAliDD/)"" ,and" " [Maaz](https://github.com/maazzzzz/)")
-
-
+        
 if __name__ == '__main__':
     main()
