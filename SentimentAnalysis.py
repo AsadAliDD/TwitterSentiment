@@ -149,7 +149,7 @@ def main():
             user_input2 = st.text_input(
                 "Another Keyword", "Type Here.")
 
-
+        bar=st.progress(0)
         if st.button("Submit"):
 
             start=time.time()
@@ -157,16 +157,22 @@ def main():
 
             text_query = user_input
             queryTweet(text_query)
-            tw1 = getTweets(user_input, 100)
+            bar.progress(10)
+            
 
             vect, model = load_models()
+            bar.progress(30)
             
+            tw1 = getTweets(user_input, 100)
             tw1_pred = predict(vect, model, tw1["Tweets"].tolist())
             tw1_pred["Date"] = tw1["Date"]
 
             st.subheader(user_input)
             st.dataframe(tw1_pred)
 
+
+            bar.progress(60)
+            
 
             if(flag):
                 tw2 = getTweets(user_input2, 100)
@@ -179,7 +185,7 @@ def main():
 
             # tdf["Date"]=df["Date"]
 
-            
+
             if(flag):
                 # scatter plot
                 st.subheader("Scatter Plot")
@@ -224,6 +230,9 @@ def main():
                                 yaxis_title='Number of Tweets')
                 st.plotly_chart(fig)
 
+
+            
+
             else:
                 # plot
                 st.subheader("Scatter Plot")
@@ -255,6 +264,10 @@ def main():
                                 yaxis_title='Number of Tweets')
                 st.plotly_chart(fig)
 
+
+
+            bar.progress(100)
+        
 
             end = time.time()
             print("Total Time: ",end - start)
