@@ -1,8 +1,7 @@
 # TwitterSentiment
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/AsadAliDD/TwitterSentiment/graphs/commit-activity) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-https://img.shields.io/github/followers/asadalidd
-
+![GitHub followers](https://img.shields.io/github/followers/asadalidd?label=Follow&style=flat-square)
 
 TwitterSentiment is a **Keyword based Twitter Sentiment Analyzer**. It uses tweets based on the input provided by the user to generate a Rudimentry Sentiment Report.
 
