@@ -41,7 +41,7 @@ The preprocessed tweets are then vectorized using **Tf-idf**. The vectorized twe
 
 ## Docker
 
-> :warning: Docker Linux is needed for this!
+> :warning:  Docker Linux is needed for this!
 
 `docker pull realdexter/twitter_sentiment:latest`
 
