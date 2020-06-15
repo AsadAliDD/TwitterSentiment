@@ -11,6 +11,8 @@ TwitterSentiment is a **Keyword based Twitter Sentiment Analyzer**. It uses twee
 
 https://twittersa-hyo.oa.r.appspot.com/
 
+Orientation Project for **Hack Your Own**
+
 ![UI](Images/ui.gif)
 
 
