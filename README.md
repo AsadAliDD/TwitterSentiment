@@ -4,7 +4,7 @@
 
 TwitterSentiment is a **Keyword based Twitter Sentiment Analyzer**. It uses tweets based on the input provided by the user to generate a Rudimentry Sentiment Report.
 
-![UI](images/ui.gif)
+![UI](Images/ui.gif)
 
 
 
@@ -56,6 +56,9 @@ Visit https://localhost:8501
 
 
 ## Usage (Locally)
+
+> :warning:  Model files not included in git repo.
+
 
 `git clone https://github.com/AsadAliDD/TwitterSentiment`
 
