@@ -11,15 +11,19 @@ TwitterSentiment is a **Keyword based Twitter Sentiment Analyzer**. It uses twee
 - [TwitterSentiment](#twittersentiment)
   * [Dataset](#dataset)
   * [Methodology](#Methodology)
+  * [Docker Container](#Docker)
+  * [Usage](#Usage)
+  * [Dependencies](#Dependencies)
 
 
 ## Dataset
 
-The Sentiment Model is trained on **sentiment140** dataset. The dataset contains: 
+The Sentiment Model is trained on **sentiment140** dataset. 
+https://www.kaggle.com/kazanova/sentiment140
+
+The dataset contains: 
 * 800k Positive Tweets
 * 800k Negative Tweets 
-
-https://www.kaggle.com/kazanova/sentiment140
 
 
 ## Methodology
@@ -35,4 +39,43 @@ The 1.4 Million tweets are preprocessed using the following steps:
 The preprocessed tweets are then vectorized using **Tf-idf**. The vectorized tweets are used as a input for the Support Vector Machine Classifer. 
 
 
-##
+## Docker
+
+> :warning: Docker Linux is needed for this!
+
+`docker pull realdexter/twitter_sentiment:latest`
+
+`docker run  -p local_port:8501 realdexter/twitter_sentiment:latest`
+
+*local_port* is the Port you want to map to the exposed port of the container.
+
+Visit https://localhost:8501
+
+
+
+## Usage (Locally)
+
+`git clone https://github.com/AsadAliDD/TwitterSentiment`
+
+`pip3 install -r requirements.txt`
+
+`streamlit run SentimentAnalysis.py`
+
+
+
+## Dependencies 
+
+* Python3
+* Streamlit
+* Nltk
+* Sklearn
+* Pandas
+* Numpy
+* GetOldTweets3
+* Plotly
+
+
+
+
+
+
