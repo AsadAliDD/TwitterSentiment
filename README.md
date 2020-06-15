@@ -10,7 +10,7 @@ TwitterSentiment is a **Keyword based Twitter Sentiment Analyzer**. It uses twee
 
 - [TwitterSentiment](#twittersentiment)
   * [Dataset](#dataset)
-  *
+  * [Methodology](#Methodology)
 
 
 ## Dataset
@@ -18,6 +18,7 @@ TwitterSentiment is a **Keyword based Twitter Sentiment Analyzer**. It uses twee
 The Sentiment Model is trained on **sentiment140** dataset. The dataset contains: 
 * 800k Positive Tweets
 * 800k Negative Tweets 
+
 https://www.kaggle.com/kazanova/sentiment140
 
 
