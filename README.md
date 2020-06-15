@@ -4,6 +4,8 @@
 
 TwitterSentiment is a **Keyword based Twitter Sentiment Analyzer**. It uses tweets based on the input provided by the user to generate a Rudimentry Sentiment Report.
 
+![UI](images/ui.gif)
+
 
 
 ## Table of Contents
@@ -43,9 +45,9 @@ The preprocessed tweets are then vectorized using **Tf-idf**. The vectorized twe
 
 > :warning:  Docker Linux is needed for this!
 
-`docker pull realdexter/twitter_sentiment:latest`
+`docker pull realdexter/twitter_sentiment:v1`
 
-`docker run  -p local_port:8501 realdexter/twitter_sentiment:latest`
+`docker run  -p local_port:8501 realdexter/twitter_sentiment:v1`
 
 *local_port* is the Port you want to map to the exposed port of the container.
 
