@@ -12,7 +12,7 @@ TwitterSentiment is a **Keyword based Twitter Sentiment Analyzer**. It uses twee
 
 
 
-https://twittersa-hyo.oa.r.appspot.com/
+Former hosted demo: `twittersa-hyo.oa.r.appspot.com`
 
 ![UI](Images/ui.gif)
 
@@ -22,10 +22,10 @@ https://twittersa-hyo.oa.r.appspot.com/
 
 - [TwitterSentiment](#twittersentiment)
   * [Dataset](#dataset)
-  * [Methodology](#Methodology)
-  * [Docker Container](#Docker)
-  * [Usage](#Usage)
-  * [Dependencies](#Dependencies)
+  * [Methodology](#methodology)
+  * [Docker Container](#docker)
+  * [Usage](#usage-locally)
+  * [Dependencies](#dependencies)
 
 
 ## Dataset
@@ -61,7 +61,7 @@ The preprocessed tweets are then vectorized using **Tf-idf**. The vectorized twe
 
 *local_port* is the Port you want to map to the exposed port of the container.
 
-Visit https://localhost:8501
+Visit `http://localhost:8501`.
 
 
 
@@ -76,9 +76,24 @@ Visit https://localhost:8501
 
 `streamlit run SentimentAnalysis.py`
 
+### Reviewed CSV Input
+
+The app can also score a reviewed CSV export instead of collecting live tweets.
+This is useful when tweets were already gathered, approved, or exported from an
+external workflow such as TweetClaw for OpenClaw.
+
+1. Start the app with `streamlit run SentimentAnalysis.py`.
+2. Upload a CSV file in the analyzer view.
+3. Include one text column named `tweet`, `tweets`, `text`, `content`,
+   `message`, or `body`.
+4. Download the generated `tweet_sentiment_predictions.csv` file.
+
+The uploaded CSV path reuses the same TF-IDF vectorizer, preprocessing, and SVM
+classifier as the keyword query path.
 
 
-## Dependencies 
+
+## Dependencies
 
 * Python3
 * Streamlit
@@ -88,9 +103,6 @@ Visit https://localhost:8501
 * Numpy
 * GetOldTweets3
 * Plotly
-
-
-
 
 
 

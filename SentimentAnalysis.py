@@ -6,6 +6,7 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
 import pickle
+import base64
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
@@ -16,6 +17,7 @@ import time
 
 
 count = 100
+TEXT_COLUMNS = ("tweet", "tweets", "text", "content", "message", "body")
 
 
 
@@ -130,6 +132,25 @@ def predict(vectorizer, model, tweets):
     return df
 
 
+def get_text_column(df):
+    normalized = {str(column).strip().lower(): column for column in df.columns}
+    for column in TEXT_COLUMNS:
+        if column in normalized:
+            return normalized[column]
+    return None
+
+
+def render_csv_download(df, filename):
+    csv_bytes = df.to_csv(index=False).encode("utf-8")
+    payload = base64.b64encode(csv_bytes).decode("ascii")
+    st.markdown(
+        '<a href="data:file/csv;base64,{0}" download="{1}">Download predictions CSV</a>'.format(
+            payload, filename
+        ),
+        unsafe_allow_html=True,
+    )
+
+
 def main():
     # page title
 
@@ -143,6 +164,9 @@ def main():
 
         flag=st.sidebar.checkbox('Add Keyword')
         st.subheader('Input a tweet query')
+        uploaded_csv = st.file_uploader(
+            "Or upload reviewed tweet text CSV", type=["csv"]
+        )
 
         # user query
         user_input = st.text_input("Keyword", "Type Here.")
@@ -157,14 +181,37 @@ def main():
         if st.button("Submit"):
             with st.spinner('Wait for it...'):
                 start=time.time()
-        
+                vect, model = load_models()
+                if uploaded_csv is not None:
+                    uploaded_df = pd.read_csv(uploaded_csv)
+                    text_column = get_text_column(uploaded_df)
+                    if text_column is None:
+                        st.error(
+                            "CSV needs one text column: tweet, tweets, text, content, message, or body."
+                        )
+                        return
+                    rows = (
+                        uploaded_df[text_column]
+                        .dropna()
+                        .astype(str)
+                        .str.strip()
+                    )
+                    rows = [row for row in rows.tolist() if row]
+                    if not rows:
+                        st.error("CSV text column has no usable rows.")
+                        return
+                    batch_pred = predict(vect, model, rows)
+                    st.subheader("Uploaded CSV predictions")
+                    st.dataframe(batch_pred)
+                    render_csv_download(batch_pred, "tweet_sentiment_predictions.csv")
+                    bar.progress(100)
+                    return
 
                 text_query = user_input
                 queryTweet(text_query)
                 bar.progress(10)
                 
 
-                vect, model = load_models()
                 bar.progress(30)
                 
                 tw1 = getTweets(user_input, count)
